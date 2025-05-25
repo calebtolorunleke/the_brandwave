@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
-import GetStarted from "./components/GetStarted/getStarted";
+import GetStarted from "./components/GetStarted/GetStarted";
 
 function App() {
   const [count, setCount] = useState(0);
