@@ -1,8 +1,16 @@
 import React from "react";
 import logoName from "../images/profileLogo.png";
 import google from "../icons/google.png";
+import { useNavigate } from "react-router-dom";
 
 const SignUp = () => {
+  const navigate = useNavigate();
+
+  const signin = (e) => {
+    e.preventDefault();
+    navigate("/signin");
+  };
+
   return (
     <div className="min-h-screen flex flex-col items-center justify-center px-4 py-8 bg-gray-50">
       {/* Logo and Branding */}
@@ -18,7 +26,7 @@ const SignUp = () => {
       </div>
 
       {/* Title */}
-      <h1 className="text-2xl font-bold mb-6 text-center">
+      <h1 className="text-2xl sm:text-3xl font-bold mb-6 text-center">
         Create Your Account
       </h1>
 
@@ -71,7 +79,7 @@ const SignUp = () => {
       </form>
 
       {/* Terms of Service */}
-      <p className="text-sm text-gray-500 mt-4 text-center w-full max-w-xs">
+      <p className="text-sm text-gray-500 mt-6 text-center max-w-xs px-2">
         By signing up, you agree to our{" "}
         <a href="/terms" className="text-blue-600 underline">
           Terms of Service
@@ -84,9 +92,13 @@ const SignUp = () => {
       </p>
 
       {/* Already have an account */}
-      <p className="text-sm text-gray-600 mt-2">
+      <p className="text-sm text-gray-600 mt-4">
         Already have an account?{" "}
-        <a href="/signin" className="text-blue-600 underline">
+        <a
+          href="/signin"
+          onClick={signin}
+          className="text-blue-600 underline cursor-pointer"
+        >
           Sign in
         </a>
       </p>
