@@ -1,11 +1,18 @@
 import React, { useState } from "react";
 import logoName from "../images/profileLogo.png";
-import { Menu, X } from "lucide-react"; // Optional: install with `npm i lucide-react`
+import { Menu, X } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleMenu = () => setIsOpen(!isOpen);
+
+  const navigate = useNavigate();
+
+  const handleGetStarted = () => {
+    navigate("/signup");
+  };
 
   return (
     <header className="px-6 py-4 bg-white shadow-md">
@@ -29,7 +36,10 @@ const Header = () => {
           <span className="cursor-pointer hover:text-blue-600">
             Testimonials
           </span>
-          <button className="bg-blue-600 py-2 px-4 rounded-xl text-white hover:bg-blue-700 transition">
+          <button
+            onClick={handleGetStarted}
+            className="bg-blue-600 py-2 px-4 rounded-xl text-white hover:bg-blue-700 transition"
+          >
             Get Started
           </button>
         </nav>
@@ -52,7 +62,10 @@ const Header = () => {
           <span className="cursor-pointer hover:text-blue-600">
             Testimonials
           </span>
-          <button className="bg-blue-600 py-2 px-4 rounded-xl text-white hover:bg-blue-700 transition">
+          <button
+            onClick={handleGetStarted}
+            className="bg-blue-600 py-2 px-4 rounded-xl text-white hover:bg-blue-700 transition"
+          >
             Get Started
           </button>
         </div>

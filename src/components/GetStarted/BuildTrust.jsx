@@ -1,7 +1,13 @@
 import React from "react";
 import laptopImage from "../images/laptopImage.png";
+import { useNavigate } from "react-router-dom";
 
 const BuildTrust = () => {
+  const navigate = useNavigate();
+
+  const handleGetStarted = () => {
+    navigate("/signup");
+  };
   return (
     <div className="flex flex-col md:flex-row px-4 md:px-6 py-8 gap-8 md:gap-10 items-center justify-center">
       <div className="flex flex-col gap-4 w-full md:w-1/2 text-center md:text-left">
@@ -13,7 +19,10 @@ const BuildTrust = () => {
           performance.
         </p>
         <div className="flex justify-center md:justify-start">
-          <button className="bg-blue-600 py-2 px-6 rounded-xl text-white hover:bg-blue-700 transition">
+          <button
+            onClick={handleGetStarted}
+            className="bg-blue-600 py-2 px-6 rounded-xl text-white hover:bg-blue-700 transition"
+          >
             Get Started
           </button>
         </div>
