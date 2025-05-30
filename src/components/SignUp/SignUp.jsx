@@ -2,6 +2,7 @@ import React from "react";
 import logoName from "../images/profileLogo.png";
 import google from "../icons/google.png";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -9,6 +10,50 @@ const SignUp = () => {
   const signin = (e) => {
     e.preventDefault();
     navigate("/signin");
+  };
+
+  const [formData, setFormData] = useState({
+    fullName: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+
+  const handleChange = (e) => {
+    setFormData((prev) => ({
+      ...prev,
+      [e.target.id]: e.target.value,
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (formData.password !== formData.confirmPassword) {
+      alert("Passwords do not match!");
+      return;
+    }
+
+    try {
+      const res = await fetch("http//localhost:3000/register", {
+        method: "POST",
+        headers: {
+          "content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+      const data = await res.json();
+
+      if (res.ok) {
+        alert(data.message);
+        navigate("/signin");
+      } else {
+        alert(data.message || "something went wrong.");
+      }
+    } catch (err) {
+      console.error("Error submitting form: ", err);
+      alert("Failed to submit. Please try again");
+    }
   };
 
   return (
@@ -53,26 +98,39 @@ const SignUp = () => {
           type="text"
           placeholder="Full Name"
           className="border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          id="fullName"
+          value={formData.fullName}
+          onChange={handleChange}
         />
         <input
           type="email"
           placeholder="Email Address"
           className="border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          id="email"
+          value={formData.email}
+          onChange={handleChange}
         />
         <input
           type="password"
           placeholder="Password"
           className="border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          id="password"
+          value={formData.password}
+          onChange={handleChange}
         />
         <input
           type="password"
           placeholder="Confirm Password"
           className="border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          id="confirmPassword"
+          value={formData.confirmPassword}
+          onChange={handleChange}
         />
 
         <button
           type="submit"
           className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-md transition"
+          onClick={handleSubmit}
         >
           Create Account
         </button>
