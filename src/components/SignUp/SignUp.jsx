@@ -35,10 +35,10 @@ const SignUp = () => {
     }
 
     try {
-      const res = await fetch("http//localhost:3000/register", {
+      const res = await fetch("http://localhost:3000/register", {
         method: "POST",
         headers: {
-          "content-Type": "application/json",
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
       });
