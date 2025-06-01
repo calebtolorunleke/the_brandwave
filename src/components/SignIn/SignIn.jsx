@@ -8,10 +8,45 @@ const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSignIn = (e) => {
+  const handleSignIn = async (e) => {
     e.preventDefault();
-    // Handle actual authentication here
-    console.log("Signing in with:", email, password);
+
+    try {
+      const response = await fetch(
+        "https://brandwaveapi-production.up.railway.app/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email, password }),
+        }
+      );
+
+      if (!response.ok) {
+        // Try to parse error JSON from backend
+        let errorData;
+        try {
+          errorData = await response.json();
+        } catch {
+          throw new Error("Login failed with unknown error");
+        }
+        throw new Error(errorData.message || "Login failed");
+      }
+
+      const data = await response.json();
+
+      console.log("Login successful:", data);
+
+      // Save user info if needed
+      localStorage.setItem("user", JSON.stringify(data.user));
+
+      // Redirect on success
+      navigate("/Dashboard");
+    } catch (error) {
+      alert(error.message);
+      console.error("Login error:", error);
+    }
   };
 
   return (
@@ -61,7 +96,7 @@ const SignIn = () => {
           />
           <div className="flex justify-between items-center text-sm text-blue-600">
             <span
-              onClick={() => navigate("/forgot-password")}
+              onClick={() => navigate("/ForgotPassword")}
               className="cursor-pointer hover:underline"
             >
               Forgot password?
