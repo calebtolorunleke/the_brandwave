@@ -10,6 +10,10 @@ const Header = () => {
 
   const navigate = useNavigate();
 
+  const Testimonials = () => {
+    navigate("/FirstFooter");
+  };
+
   const handleGetStarted = () => {
     navigate("/signup");
   };
@@ -33,7 +37,10 @@ const Header = () => {
         <nav className="hidden md:flex items-center gap-8 text-gray-700">
           <span className="cursor-pointer hover:text-blue-600">Features</span>
           <span className="cursor-pointer hover:text-blue-600">Pricing</span>
-          <span className="cursor-pointer hover:text-blue-600">
+          <span
+            className="cursor-pointer hover:text-blue-600"
+            onClick={Testimonials}
+          >
             Testimonials
           </span>
           <button

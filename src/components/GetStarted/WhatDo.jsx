@@ -13,7 +13,8 @@ const WhatDo = () => {
         <h1>Esrow Payment</h1>
         <h1 className="font-bold">Integration</h1>
         <p className="text-sm text-gray-600">
-          Indutes cassinations, to build obstonn trust
+          Secure your transactions with Brandwave’s escrow payment—funds are
+          only released when both parties are satisfied.
         </p>
       </div>
 
@@ -23,7 +24,8 @@ const WhatDo = () => {
         <h1>Verified Seller</h1>
         <h1 className="font-bold">Badge</h1>
         <p className="text-sm text-gray-600">
-          Check arr preomonection forim tould trust
+          Build trust instantly with the Verified Seller badge — only authentic
+          and vetted sellers earn it.
         </p>
       </div>
 
@@ -33,7 +35,8 @@ const WhatDo = () => {
         <h1>Multi-brand</h1>
         <h1 className="font-bold">Management</h1>
         <p className="text-sm text-gray-600">
-          Manage multiple enplicy brands, and track trnt
+          Easily manage all your business ideas from one account — switch,
+          compare, and grow faster.
         </p>
       </div>
 
@@ -43,7 +46,8 @@ const WhatDo = () => {
         <h1>Analytics</h1>
         <h1 className="font-bold">Dashboard</h1>
         <p className="text-sm text-gray-600">
-          Monitor Visratilfct, teres and enportain
+          Track visits, clicks, and conversions in real time with your
+          personalized analytics dashboard.
         </p>
       </div>
     </div>
