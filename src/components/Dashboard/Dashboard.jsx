@@ -81,7 +81,7 @@ export const Dashboard = () => {
           className="text-blue-600 hover:underline"
           onClick={handleLogout}
         >
-          Logout
+          Logout!
         </button>
       </nav>
 
