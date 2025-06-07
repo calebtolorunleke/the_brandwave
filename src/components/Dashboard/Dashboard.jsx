@@ -76,7 +76,7 @@ export const Dashboard = () => {
   return (
     <div className="bg-gray-100 text-gray-800">
       <nav className="bg-white shadow p-4 flex justify-between items-center">
-        <h1 className="text-xl font-bold">Hello, {firstName}!</h1>
+        <h1 className="text-xl font-bold">Welcome, {firstName}!</h1>
         <button
           className="text-blue-600 hover:underline"
           onClick={handleLogout}
