@@ -1,13 +1,15 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import logoName from "../images/profileLogo.png";
-import google from "../icons/google.png";
+import { GoogleLogin } from "@react-oauth/google";
+import * as jwtDecode from "jwt-decode";
 
 const SignIn = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  // Email/password sign-in
   const handleSignIn = async (e) => {
     e.preventDefault();
 
@@ -24,7 +26,6 @@ const SignIn = () => {
       );
 
       if (!response.ok) {
-        // Try to parse error JSON from backend
         let errorData;
         try {
           errorData = await response.json();
@@ -35,17 +36,44 @@ const SignIn = () => {
       }
 
       const data = await response.json();
-
       console.log("Login successful:", data);
 
-      // Save user info if needed
       localStorage.setItem("user", JSON.stringify(data.user));
-
-      // Redirect on success
       navigate("/Dashboard");
     } catch (error) {
       alert(error.message);
       console.error("Login error:", error);
+    }
+  };
+
+  // Google sign-in
+  const handleGoogleSuccess = async (credentialResponse) => {
+    try {
+      const decoded = jwtDecode.default(credentialResponse.credential);
+      console.log("Decoded Google User:", decoded);
+
+      const response = await fetch(
+        "https://brandwaveapi-production.up.railway.app/google-login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ token: credentialResponse.credential }),
+        }
+      );
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || "Google login failed");
+      }
+
+      localStorage.setItem("user", JSON.stringify(data.user));
+      navigate("/Dashboard");
+    } catch (error) {
+      console.error("Google Sign-In Error:", error);
+      alert(error.message);
     }
   };
 
@@ -64,10 +92,13 @@ const SignIn = () => {
         </h2>
 
         {/* Google Sign-in */}
-        <button className="w-full flex items-center justify-center gap-2 border border-gray-300 rounded-md py-2 hover:bg-gray-100 transition">
-          <img src={google} alt="Google" className="w-5 h-5" />
-          Sign in with Google
-        </button>
+        <div className="flex justify-center">
+          <GoogleLogin
+            onSuccess={handleGoogleSuccess}
+            onError={() => console.log("Google login failed")}
+            useOneTap
+          />
+        </div>
 
         {/* Divider */}
         <div className="flex items-center gap-2">
