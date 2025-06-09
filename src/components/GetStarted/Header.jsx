@@ -41,7 +41,7 @@ const Header = () => {
             className="cursor-pointer hover:text-blue-600"
             onClick={Testimonials}
           >
-            Testimonials
+            The Testimonials
           </span>
           <button
             onClick={handleGetStarted}
