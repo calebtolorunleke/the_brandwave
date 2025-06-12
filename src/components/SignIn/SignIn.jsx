@@ -2,66 +2,68 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import logoName from "../images/profileLogo.png";
 import { GoogleLogin } from "@react-oauth/google";
-import * as jwtDecode from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
+import { LOGIN_URL, GOOGLE_LOGIN_URL } from "../constants/api.js";
 
 const SignIn = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
   // Email/password sign-in
   const handleSignIn = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
     try {
-      const response = await fetch(
-        "https://brandwaveapi-production.up.railway.app/login",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ email, password }),
-        }
-      );
-
-      if (!response.ok) {
-        let errorData;
-        try {
-          errorData = await response.json();
-        } catch {
-          throw new Error("Login failed with unknown error");
-        }
-        throw new Error(errorData.message || "Login failed");
-      }
+      const response = await fetch(LOGIN_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
 
       const data = await response.json();
-      console.log("Login successful:", data);
+
+      if (!response.ok) {
+        throw new Error(data.message || "Login failed");
+      }
 
       localStorage.setItem("user", JSON.stringify(data.user));
+      if (data.token) {
+        localStorage.setItem("token", data.token);
+      }
+
       navigate("/Dashboard");
     } catch (error) {
       alert(error.message);
       console.error("Login error:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
   // Google sign-in
   const handleGoogleSuccess = async (credentialResponse) => {
+    setLoading(true);
+
     try {
-      const decoded = jwtDecode.default(credentialResponse.credential);
+      if (!credentialResponse?.credential) {
+        throw new Error("Google credential not received");
+      }
+
+      const decoded = jwtDecode(credentialResponse.credential); // ✅ FIXED
       console.log("Decoded Google User:", decoded);
 
-      const response = await fetch(
-        "https://brandwaveapi-production.up.railway.app/google-login",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ token: credentialResponse.credential }),
-        }
-      );
+      const response = await fetch(GOOGLE_LOGIN_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ token: credentialResponse.credential }),
+      });
 
       const data = await response.json();
 
@@ -70,10 +72,16 @@ const SignIn = () => {
       }
 
       localStorage.setItem("user", JSON.stringify(data.user));
+      if (data.token) {
+        localStorage.setItem("token", data.token);
+      }
+
       navigate("/Dashboard");
     } catch (error) {
       console.error("Google Sign-In Error:", error);
       alert(error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -95,8 +103,10 @@ const SignIn = () => {
         <div className="flex justify-center">
           <GoogleLogin
             onSuccess={handleGoogleSuccess}
-            onError={() => console.log("Google login failed")}
-            useOneTap
+            onError={(error) => console.error("Google login error:", error)}
+            type="standard" // ✅ EXPLICITLY SET
+            theme="outline"
+            size="large"
           />
         </div>
 
@@ -111,6 +121,7 @@ const SignIn = () => {
         <form onSubmit={handleSignIn} className="space-y-4">
           <input
             type="email"
+            aria-label="Email"
             placeholder="Email"
             className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             value={email}
@@ -119,6 +130,7 @@ const SignIn = () => {
           />
           <input
             type="password"
+            aria-label="Password"
             placeholder="Password"
             className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             value={password}
@@ -136,15 +148,20 @@ const SignIn = () => {
 
           <button
             type="submit"
-            className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition"
+            disabled={loading}
+            className={`w-full py-2 rounded-md transition text-white ${
+              loading
+                ? "bg-blue-400 cursor-not-allowed"
+                : "bg-blue-600 hover:bg-blue-700"
+            }`}
           >
-            Sign In
+            {loading ? "Signing In..." : "Sign In"}
           </button>
         </form>
 
         {/* Sign Up Redirect */}
         <p className="text-center text-sm text-gray-600">
-          Don't have an account??{" "}
+          Don't have an account?{" "}
           <span
             onClick={() => navigate("/signup")}
             className="text-blue-600 hover:underline cursor-pointer"
