@@ -35,16 +35,13 @@ const SignUp = () => {
     }
 
     try {
-      const res = await fetch(
-        "https://brandwaveapi-production.up.railway.app/register",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
-        }
-      );
+      const res = await fetch("ttps://brandwave-api.onrender.com/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
       const data = await res.json();
 
       if (res.ok) {
