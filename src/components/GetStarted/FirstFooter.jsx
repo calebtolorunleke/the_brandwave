@@ -8,7 +8,7 @@ import img5 from "../images/test5.jpeg";
 
 const testimonials = [
   {
-    name: "John Doe",
+    name: "Akoaba Charles",
     feedback:
       "Brandwave made launching my skincare line feel effortless. I built a stunning page, tracked every click, and even secured payments with escrow — all in one place.",
     image: img1,
