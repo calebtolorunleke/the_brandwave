@@ -1,16 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import logoName from "../images/profileLogo.png";
-import google from "../icons/google.png";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { GoogleLogin } from "@react-oauth/google";
+import { jwtDecode } from "jwt-decode";
 
 const SignUp = () => {
   const navigate = useNavigate();
-
-  const signin = (e) => {
-    e.preventDefault();
-    navigate("/signin");
-  };
 
   const [formData, setFormData] = useState({
     fullName: "",
@@ -35,24 +30,63 @@ const SignUp = () => {
     }
 
     try {
-      const res = await fetch("ttps://brandwave-api.onrender.com/register", {
+      const res = await fetch("https://brandwave-api.onrender.com/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
       });
+
       const data = await res.json();
 
       if (res.ok) {
         alert(data.message);
         navigate("/signin");
       } else {
-        alert(data.message || "something went wrong.");
+        alert(data.message || "Something went wrong.");
       }
     } catch (err) {
       console.error("Error submitting form: ", err);
-      alert("Failed to submit. Please try again");
+      alert("Failed to submit. Please try again.");
+    }
+  };
+
+  const handleGoogleSuccess = async (credentialResponse) => {
+    try {
+      if (!credentialResponse?.credential) {
+        throw new Error("Google credential not received");
+      }
+
+      const decoded = jwtDecode(credentialResponse.credential);
+      console.log("Decoded Google User (SignUp):", decoded);
+
+      const response = await fetch(
+        "https://brandwave-api.onrender.com/google-login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ token: credentialResponse.credential }),
+        }
+      );
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || "Google signup failed");
+      }
+
+      localStorage.setItem("user", JSON.stringify(data.user));
+      if (data.token) {
+        localStorage.setItem("token", data.token);
+      }
+
+      navigate("/Dashboard");
+    } catch (error) {
+      console.error("Google Sign-Up Error:", error);
+      alert(error.message);
     }
   };
 
@@ -75,15 +109,17 @@ const SignUp = () => {
         Create Your Account
       </h1>
 
-      {/* Google Sign Up Button */}
-      <button className="flex items-center gap-3 bg-blue-600 hover:bg-blue-700 text-white py-2 px-6 rounded-lg shadow-md transition w-full max-w-xs justify-center mb-4">
-        <img
-          src={google}
-          alt="Google"
-          className="bg-white rounded-full p-1 w-6 h-6"
+      {/* Google Sign Up */}
+      <div className="flex justify-center w-full max-w-xs mb-4">
+        <GoogleLogin
+          onSuccess={handleGoogleSuccess}
+          onError={(error) => console.error("Google Sign-Up Error:", error)}
+          theme="outline"
+          size="large"
+          type="standard"
+          shape="pill"
         />
-        <span className="text-sm font-medium">Sign up with Google</span>
-      </button>
+      </div>
 
       {/* Divider */}
       <div className="flex items-center gap-3 my-4 w-full max-w-xs">
@@ -92,51 +128,57 @@ const SignUp = () => {
         <div className="h-px flex-grow bg-gray-300"></div>
       </div>
 
-      {/* Sign-up form */}
-      <form className="flex flex-col gap-4 w-full max-w-xs">
+      {/* Sign-up Form */}
+      <form
+        onSubmit={handleSubmit}
+        className="flex flex-col gap-4 w-full max-w-xs"
+      >
         <input
           type="text"
           placeholder="Full Name"
-          className="border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
           id="fullName"
           value={formData.fullName}
           onChange={handleChange}
+          className="border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          required
         />
         <input
           type="email"
           placeholder="Email Address"
-          className="border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
           id="email"
           value={formData.email}
           onChange={handleChange}
+          className="border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          required
         />
         <input
           type="password"
           placeholder="Password"
-          className="border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
           id="password"
           value={formData.password}
           onChange={handleChange}
+          className="border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          required
         />
         <input
           type="password"
           placeholder="Confirm Password"
-          className="border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
           id="confirmPassword"
           value={formData.confirmPassword}
           onChange={handleChange}
+          className="border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          required
         />
 
         <button
           type="submit"
           className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-md transition"
-          onClick={handleSubmit}
         >
           Create Account
         </button>
       </form>
 
-      {/* Terms of Service */}
+      {/* Terms */}
       <p className="text-sm text-gray-500 mt-6 text-center max-w-xs px-2">
         By signing up, you agree to our{" "}
         <a href="/terms" className="text-blue-600 underline">
@@ -149,16 +191,15 @@ const SignUp = () => {
         .
       </p>
 
-      {/* Already have an account */}
+      {/* Redirect to Sign In */}
       <p className="text-sm text-gray-600 mt-4">
         Already have an account?{" "}
-        <a
-          href="/signin"
-          onClick={signin}
+        <span
+          onClick={() => navigate("/signin")}
           className="text-blue-600 underline cursor-pointer"
         >
           Sign in
-        </a>
+        </span>
       </p>
     </div>
   );
