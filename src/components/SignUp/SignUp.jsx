@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import logoName from "../images/profileLogo.png";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { GoogleLogin } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
 
@@ -93,7 +93,7 @@ const SignUp = () => {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center px-4 py-8 bg-gray-50">
       {/* Logo and Branding */}
-      <div className="flex items-center gap-3 mb-6">
+      <Link to="/" className="flex items-center gap-3 mb-6">
         <img
           src={logoName}
           className="h-10 w-10 object-contain rounded-xl"
@@ -102,8 +102,7 @@ const SignUp = () => {
         <h3 className="text-xl font-semibold text-blue-900 tracking-wide">
           BRANDWAVE
         </h3>
-      </div>
-
+      </Link>
       {/* Title */}
       <h1 className="text-2xl sm:text-3xl font-bold mb-6 text-center">
         Create Your Account

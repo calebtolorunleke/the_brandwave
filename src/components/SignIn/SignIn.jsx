@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import logoName from "../images/profileLogo.png";
 import { GoogleLogin } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
@@ -89,10 +89,10 @@ const SignIn = () => {
     <div className="min-h-screen flex items-center justify-center px-4 bg-gray-50">
       <div className="max-w-md w-full bg-white p-8 rounded-xl shadow-md space-y-6">
         {/* Logo */}
-        <div className="flex justify-center items-center gap-2 mb-4">
+        <Link to="/" className="flex justify-center items-center gap-2 mb-4">
           <img src={logoName} alt="Logo" className="h-10 w-10 rounded-xl" />
           <h3 className="text-2xl font-semibold text-blue-900">BRANDWAVE</h3>
-        </div>
+        </Link>
 
         {/* Heading */}
         <h2 className="text-center text-2xl font-bold text-gray-800">
