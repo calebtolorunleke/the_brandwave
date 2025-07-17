@@ -39,28 +39,33 @@ const testimonials = [
 
 const FirstFooter = () => {
   return (
-    <div className="bg-gray-50 py-10 px-4 sm:px-6 lg:px-8 overflow-hidden">
-      <div className="relative h-80 sm:h-96 md:h-[30rem] max-w-4xl mx-auto">
-        <div className="testimonial-scroll">
-          {testimonials.concat(testimonials).map((testimonial, index) => (
-            <div
-              key={index}
-              className="flex flex-col items-center text-center px-6 py-4"
-            >
-              <img
-                src={testimonial.image}
-                alt={testimonial.name}
-                className="w-20 h-20 sm:w-24 sm:h-24 rounded-full object-cover mb-3"
-              />
-              <p className="text-base sm:text-lg text-gray-700 italic">
-                "{testimonial.feedback}"
-              </p>
-              <p className="mt-2 text-sm text-gray-500">— {testimonial.name}</p>
-            </div>
-          ))}
+    <main className="flex flex-col items-center gap-10 py-10   w-full bg-gray-50">
+      <h1 className="text-4xl mt-5 font-bold">Testimonials</h1>
+      <div className=" py-10 px-4 w-full sm:px-6 lg:px-8 overflow-hidden">
+        <div className="relative h-80 sm:h-96 md:h-[30rem] max-w-4xl mx-auto">
+          <div className="testimonial-scroll">
+            {testimonials.concat(testimonials).map((testimonial, index) => (
+              <div
+                key={index}
+                className="flex flex-col items-center text-center px-6 py-4"
+              >
+                <img
+                  src={testimonial.image}
+                  alt={testimonial.name}
+                  className="w-20 h-20 sm:w-24 sm:h-24 rounded-full object-cover mb-3"
+                />
+                <p className="text-base sm:text-lg text-gray-700 italic">
+                  "{testimonial.feedback}"
+                </p>
+                <p className="mt-2 text-sm text-gray-500">
+                  — {testimonial.name}
+                </p>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
-    </div>
+    </main>
   );
 };
 
