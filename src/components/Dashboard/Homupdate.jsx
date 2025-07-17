@@ -191,12 +191,72 @@ const Homupdate = () => {
         </div>
       </div>
       <FirstFooter />
-      <footer className="flex flex-col">
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
+      <footer className="bg-blue-900 text-white px-6 md:px-12 py-20">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-6 gap-8">
+          {/* Brand Info */}
+          <div className="col-span-1 flex flex-col gap-4">
+            <div className="flex flex-col items-center gap-2">
+              <img src={logo} alt="Brandwave logo" className="h-6 w-auto" />
+              <span className="text-xl font-semibold">Brandwave</span>
+            </div>
+            <p className="text-sm text-gray-200 max-w-xs">
+              Collaboration platform for modern teams.
+            </p>
+          </div>
+
+          {/* Company */}
+          <div>
+            <h5 className="text-[#5468E7] font-bold text-lg mb-2">Company</h5>
+            <ul className="space-y-3 text-sm text-gray-200">
+              <li>Product</li>
+              <li>Blog</li>
+              <li>Support</li>
+            </ul>
+          </div>
+
+          {/* Features */}
+          <div>
+            <h5 className="text-[#5468E7] font-bold text-lg mb-2">Features</h5>
+            <ul className="space-y-3 text-sm text-gray-200">
+              <li>Screen sharing</li>
+              <li>iOS & Android Apps</li>
+              <li>File Sharing User Management</li>
+            </ul>
+          </div>
+
+          {/* Contact Us */}
+          <div>
+            <h5 className="text-[#5468E7] font-bold text-lg mb-2">
+              Contact Us
+            </h5>
+            <ul className="space-y-3 text-sm text-gray-200">
+              <li>info@brandwave.com</li>
+              <li>1-800-200-300</li>
+              <li>1010 Sunset Blv.</li>
+              <li>Pali Alto, California</li>
+            </ul>
+          </div>
+
+          {/* Newsletter */}
+          <div className="md:col-span-2">
+            <h5 className="text-[#5468E7] font-bold text-lg mb-2">
+              Stay ahead with branding tips
+            </h5>
+            <p className="text-sm text-gray-200 mb-4">
+              Subscribe to our newsletter
+            </p>
+            <form className="flex flex-col sm:flex-row gap-2">
+              <input
+                type="email"
+                placeholder="Email"
+                className="px-4 bg-gray-400 py-2 rounded text-black focus:outline-none"
+              />
+              <button className="bg-[#5468E7] text-white px-4 py-2 rounded hover:bg-blue-700 transition">
+                Subscribe
+              </button>
+            </form>
+          </div>
+        </div>
       </footer>
     </main>
   );
