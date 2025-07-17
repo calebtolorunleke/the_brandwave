@@ -9,11 +9,12 @@ import TemplateEditor from "./components/TemplateEditor";
 import FirstFooter from "./components/GetStarted/FirstFooter";
 import Privacy from "./components/Privacy";
 import Terms from "./components/Terms";
+import Homupdate from "./components/Dashboard/Homupdate";
 
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<GetStarted />} />
+      <Route path="/" element={<Homupdate />} />
       <Route path="/signup" element={<SignUp />} />
       <Route path="/signin" element={<SignIn />} />
       <Route path="/Dashboard" element={<Dashboard />} />

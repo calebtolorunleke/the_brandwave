@@ -4,6 +4,7 @@ import logoName from "../images/profileLogo.png";
 import { GoogleLogin } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
 import { LOGIN_URL, GOOGLE_LOGIN_URL } from "../constants/api.js";
+import signImg from "../images/signImg.jpg";
 
 const SignIn = () => {
   const navigate = useNavigate();
@@ -86,91 +87,107 @@ const SignIn = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 bg-gray-50">
-      <div className="max-w-md w-full bg-white p-8 rounded-xl shadow-md space-y-6">
-        {/* Logo */}
-        <Link to="/" className="flex justify-center items-center gap-2 mb-4">
-          <img src={logoName} alt="Logo" className="h-10 w-10 rounded-xl" />
-          <h3 className="text-2xl font-semibold text-blue-900">BRANDWAVE</h3>
-        </Link>
-
-        {/* Heading */}
-        <h2 className="text-center text-2xl font-bold text-gray-800">
-          Sign In to Your Account
-        </h2>
-
-        {/* Google Sign-in */}
-        <div className="flex justify-center">
-          <GoogleLogin
-            onSuccess={handleGoogleSuccess}
-            onError={(error) => console.error("Google login error:", error)}
-            type="standard" // ✅ EXPLICITLY SET
-            theme="outline"
-            size="large"
-          />
-        </div>
-
-        {/* Divider */}
-        <div className="flex items-center gap-2">
-          <hr className="flex-grow border-gray-300" />
-          <span className="text-gray-400 text-sm">or</span>
-          <hr className="flex-grow border-gray-300" />
-        </div>
-
-        {/* Form */}
-        <form onSubmit={handleSignIn} className="space-y-4">
-          <input
-            type="email"
-            aria-label="Email"
-            placeholder="Email"
-            className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-          <input
-            type="password"
-            aria-label="Password"
-            placeholder="Password"
-            className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-          <div className="flex justify-between items-center text-sm text-blue-600">
-            <span
-              onClick={() => navigate("/ForgotPassword")}
-              className="cursor-pointer hover:underline"
+    <>
+      <main className="max-h-screen md:grid grid-cols-2">
+        <div className="min-h-screen flex items-center justify-center px-4 bg-gray-50">
+          <div className="max-w-md w-full bg-white p-8 rounded-xl shadow-md space-y-6">
+            {/* Logo */}
+            <Link
+              to="/"
+              className="flex justify-center items-center gap-2 mb-4"
             >
-              Forgot password?
-            </span>
+              <img src={logoName} alt="Logo" className="h-10 w-10 rounded-xl" />
+              <h3 className="text-2xl font-semibold text-blue-900">
+                BRANDWAVE
+              </h3>
+            </Link>
+
+            {/* Heading */}
+            <h2 className="text-center text-2xl font-bold text-gray-800">
+              Sign In to Your Account
+            </h2>
+
+            {/* Google Sign-in */}
+            <div className="flex justify-center">
+              <GoogleLogin
+                onSuccess={handleGoogleSuccess}
+                onError={(error) => console.error("Google login error:", error)}
+                type="standard" // ✅ EXPLICITLY SET
+                theme="outline"
+                size="large"
+              />
+            </div>
+
+            {/* Divider */}
+            <div className="flex items-center gap-2">
+              <hr className="flex-grow border-gray-300" />
+              <span className="text-gray-400 text-sm">or</span>
+              <hr className="flex-grow border-gray-300" />
+            </div>
+
+            {/* Form */}
+            <form onSubmit={handleSignIn} className="space-y-4">
+              <input
+                type="email"
+                aria-label="Email"
+                placeholder="Email"
+                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+              <input
+                type="password"
+                aria-label="Password"
+                placeholder="Password"
+                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+              <div className="flex justify-between items-center text-sm text-blue-600">
+                <span
+                  onClick={() => navigate("/ForgotPassword")}
+                  className="cursor-pointer hover:underline"
+                >
+                  Forgot password?
+                </span>
+              </div>
+
+              <button
+                type="submit"
+                disabled={loading}
+                className={`w-full py-2 rounded-md transition text-white ${
+                  loading
+                    ? "bg-blue-400 cursor-not-allowed"
+                    : "bg-blue-600 hover:bg-blue-700"
+                }`}
+              >
+                {loading ? "Signing In..." : "Sign In"}
+              </button>
+            </form>
+
+            {/* Sign Up Redirect */}
+            <p className="text-center text-sm text-gray-600">
+              Don't have an account?{" "}
+              <span
+                onClick={() => navigate("/signup")}
+                className="text-blue-600 hover:underline cursor-pointer"
+              >
+                Sign up
+              </span>
+            </p>
           </div>
-
-          <button
-            type="submit"
-            disabled={loading}
-            className={`w-full py-2 rounded-md transition text-white ${
-              loading
-                ? "bg-blue-400 cursor-not-allowed"
-                : "bg-blue-600 hover:bg-blue-700"
-            }`}
-          >
-            {loading ? "Signing In..." : "Sign In"}
-          </button>
-        </form>
-
-        {/* Sign Up Redirect */}
-        <p className="text-center text-sm text-gray-600">
-          Don't have an account?{" "}
-          <span
-            onClick={() => navigate("/signup")}
-            className="text-blue-600 hover:underline cursor-pointer"
-          >
-            Sign up
-          </span>
-        </p>
-      </div>
-    </div>
+        </div>
+        <div className="hidden md:block max-h-screen">
+          <img
+            src={signImg}
+            className="h-screen object-center object-cover"
+            alt=""
+          />
+        </div>
+      </main>
+    </>
   );
 };
 

@@ -3,6 +3,7 @@ import logoName from "../images/profileLogo.png";
 import { Link, useNavigate } from "react-router-dom";
 import { GoogleLogin } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
+import signImg from "../images/signImg.jpg";
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -91,116 +92,127 @@ const SignUp = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center px-4 py-8 bg-gray-50">
-      {/* Logo and Branding */}
-      <Link to="/" className="flex items-center gap-3 mb-6">
-        <img
-          src={logoName}
-          className="h-10 w-10 object-contain rounded-xl"
-          alt="Brandwave Logo"
-        />
-        <h3 className="text-xl font-semibold text-blue-900 tracking-wide">
-          BRANDWAVE
-        </h3>
-      </Link>
-      {/* Title */}
-      <h1 className="text-2xl sm:text-3xl font-bold mb-6 text-center">
-        Create Your Account
-      </h1>
+    <>
+      <main className="max-h-screen grid grid-cols-2">
+        <div className="min-h-screen flex flex-col items-center justify-center px-4 py-8 bg-gray-50">
+          {/* Logo and Branding */}
+          <Link to="/" className="flex items-center gap-3 mb-6">
+            <img
+              src={logoName}
+              className="h-10 w-10 object-contain rounded-xl"
+              alt="Brandwave Logo"
+            />
+            <h3 className="text-xl font-semibold text-blue-900 tracking-wide">
+              BRANDWAVE
+            </h3>
+          </Link>
+          {/* Title */}
+          <h1 className="text-2xl sm:text-3xl font-bold mb-6 text-center">
+            Create Your Account
+          </h1>
 
-      {/* Google Sign Up */}
-      <div className="flex justify-center w-full max-w-xs mb-4">
-        <GoogleLogin
-          onSuccess={handleGoogleSuccess}
-          onError={(error) => console.error("Google Sign-Up Error:", error)}
-          theme="outline"
-          size="large"
-          type="standard"
-          shape="pill"
-        />
-      </div>
+          {/* Google Sign Up */}
+          <div className="flex justify-center w-full max-w-xs mb-4">
+            <GoogleLogin
+              onSuccess={handleGoogleSuccess}
+              onError={(error) => console.error("Google Sign-Up Error:", error)}
+              theme="outline"
+              size="large"
+              type="standard"
+              shape="pill"
+            />
+          </div>
 
-      {/* Divider */}
-      <div className="flex items-center gap-3 my-4 w-full max-w-xs">
-        <div className="h-px flex-grow bg-gray-300"></div>
-        <span className="text-gray-500 text-sm">or</span>
-        <div className="h-px flex-grow bg-gray-300"></div>
-      </div>
+          {/* Divider */}
+          <div className="flex items-center gap-3 my-4 w-full max-w-xs">
+            <div className="h-px flex-grow bg-gray-300"></div>
+            <span className="text-gray-500 text-sm">or</span>
+            <div className="h-px flex-grow bg-gray-300"></div>
+          </div>
 
-      {/* Sign-up Form */}
-      <form
-        onSubmit={handleSubmit}
-        className="flex flex-col gap-4 w-full max-w-xs"
-      >
-        <input
-          type="text"
-          placeholder="Full Name"
-          id="fullName"
-          value={formData.fullName}
-          onChange={handleChange}
-          className="border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          required
-        />
-        <input
-          type="email"
-          placeholder="Email Address"
-          id="email"
-          value={formData.email}
-          onChange={handleChange}
-          className="border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          required
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          id="password"
-          value={formData.password}
-          onChange={handleChange}
-          className="border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          required
-        />
-        <input
-          type="password"
-          placeholder="Confirm Password"
-          id="confirmPassword"
-          value={formData.confirmPassword}
-          onChange={handleChange}
-          className="border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          required
-        />
+          {/* Sign-up Form */}
+          <form
+            onSubmit={handleSubmit}
+            className="flex flex-col gap-4 w-full max-w-xs"
+          >
+            <input
+              type="text"
+              placeholder="Full Name"
+              id="fullName"
+              value={formData.fullName}
+              onChange={handleChange}
+              className="border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              required
+            />
+            <input
+              type="email"
+              placeholder="Email Address"
+              id="email"
+              value={formData.email}
+              onChange={handleChange}
+              className="border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              required
+            />
+            <input
+              type="password"
+              placeholder="Password"
+              id="password"
+              value={formData.password}
+              onChange={handleChange}
+              className="border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              required
+            />
+            <input
+              type="password"
+              placeholder="Confirm Password"
+              id="confirmPassword"
+              value={formData.confirmPassword}
+              onChange={handleChange}
+              className="border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              required
+            />
 
-        <button
-          type="submit"
-          className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-md transition"
-        >
-          Create Account
-        </button>
-      </form>
+            <button
+              type="submit"
+              className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-md transition"
+            >
+              Create Account
+            </button>
+          </form>
 
-      {/* Terms */}
-      <p className="text-sm text-gray-500 mt-6 text-center max-w-xs px-2">
-        By signing up, you agree to our{" "}
-        <a href="/terms" className="text-blue-600 underline">
-          Terms of Service
-        </a>{" "}
-        and{" "}
-        <a href="/privacy" className="text-blue-600 underline">
-          Privacy Policy
-        </a>
-        .
-      </p>
+          {/* Terms */}
+          <p className="text-sm text-gray-500 mt-6 text-center max-w-xs px-2">
+            By signing up, you agree to our{" "}
+            <a href="/terms" className="text-blue-600 underline">
+              Terms of Service
+            </a>{" "}
+            and{" "}
+            <a href="/privacy" className="text-blue-600 underline">
+              Privacy Policy
+            </a>
+            .
+          </p>
 
-      {/* Redirect to Sign In */}
-      <p className="text-sm text-gray-600 mt-4">
-        Already have an account?{" "}
-        <span
-          onClick={() => navigate("/signin")}
-          className="text-blue-600 underline cursor-pointer"
-        >
-          Sign in
-        </span>
-      </p>
-    </div>
+          {/* Redirect to Sign In */}
+          <p className="text-sm text-gray-600 mt-4">
+            Already have an account?{" "}
+            <span
+              onClick={() => navigate("/signin")}
+              className="text-blue-600 underline cursor-pointer"
+            >
+              Sign in
+            </span>
+          </p>
+        </div>
+        <div className="hidden md:block max-h-screen">
+          <img
+            src={signImg}
+            className="h-screen object-center object-cover"
+            alt=""
+          />
+        </div>
+      </main>
+    </>
   );
 };
 
