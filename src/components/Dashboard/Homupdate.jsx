@@ -1,17 +1,20 @@
 import React from "react";
 import logo from "../images/logo.svg";
 import headImg from "../images/homeImg.jpg";
+import simg from "../images/sImg.jpg";
+import roundimg from "../images/test1.jpeg";
 
 const Homupdate = () => {
   return (
-    <main>
+    <main className="max-w-[1300px] mx-auto px-6 md:px-12">
+      {/* Hero Section */}
       <div
-        className="relative bg-cover bg-center bg-no-repeat h-[40rem] max-w-[1300px] mx-auto px-6 md:px-12"
+        className="relative bg-cover bg-center bg-no-repeat h-[40rem] overflow-hidden"
         style={{
           backgroundImage: `url(${headImg})`,
         }}
       >
-        {/* Overlay (optional for better text visibility) */}
+        {/* Overlay */}
         <div className="absolute inset-0 bg-black/50 z-0"></div>
 
         {/* Header */}
@@ -57,7 +60,81 @@ const Homupdate = () => {
           </p>
         </div>
       </div>
-      <div></div>
+
+      {/* Brand Section */}
+      <div className="bg-[#99A6AF] grid grid-cols-1 md:grid-cols-2 gap-10 px-6 md:px-12 py-20 rounded-b-xl">
+        {/* Left: Profile and Service */}
+        <div className="flex flex-col gap-8">
+          {/* Profile Card */}
+          <div className="rounded bg-[#C8C9CA] p-6 space-y-4 shadow-md">
+            <div className="flex flex-row gap-4 items-center">
+              <img
+                src={roundimg}
+                className="w-12 h-12 rounded-full"
+                alt="Profile"
+              />
+              <div className="flex flex-col">
+                <span className="font-semibold">Createx Inc.</span>
+                <span className="text-sm text-gray-700">Fashion Designer</span>
+              </div>
+            </div>
+            <p className="text-sm text-gray-800">
+              Cretex Inc. is a contemporary fashion brand redefining African
+              style through innovative tailoring, modern cuts, and timeless
+              elegance. From custom pieces to ready-to-wear, each outfit tells a
+              story of confidence and culture.
+            </p>
+            {/* You can replace the following with actual star icons or social media icons */}
+            <div className="flex gap-2">
+              {[...Array(5)].map((_, idx) => (
+                <div
+                  key={idx}
+                  className="w-4 h-4 bg-yellow-400 rounded-full"
+                  title="Star"
+                ></div>
+              ))}
+            </div>
+          </div>
+
+          {/* Design Services and Image */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <div className="flex flex-col gap-3 py-6 px-4 bg-[#C8C9CA] rounded shadow-sm">
+              <h2 className="font-bold text-lg">Design Services</h2>
+              <p className="text-sm">
+                Custom Tailoring (Men & Women) <br />
+                Ready-to-Wear Sales <br />
+                Bridal & Eventwear <br />
+                Creative Styling & Consultation <br />
+                Fashion Design for Film/Stage
+              </p>
+              <span className="underline text-sm text-blue-800 cursor-pointer">
+                Book a Styling Session
+              </span>
+            </div>
+            <div className="h-full">
+              <img
+                src={simg}
+                className="w-full h-full object-cover rounded"
+                alt="Design Sample"
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Right: CTA Section */}
+        <div className="flex flex-col gap-6 justify-center items-start px-4 md:px-8">
+          <h1 className="font-bold text-4xl text-white leading-tight">
+            Build a Brand Page That Speaks for You
+          </h1>
+          <p className="text-white text-base">
+            Brandwave makes it easy to build a standout presence. Upload your
+            assets, choose a layout, and go live – no code, no hassle.
+          </p>
+          <button className="text-white bg-[#1E88E5] px-6 py-3 rounded hover:bg-blue-700 transition">
+            Get Started
+          </button>
+        </div>
+      </div>
     </main>
   );
 };
