@@ -5,6 +5,7 @@ import secImg from "../images/homeImg2.jpg";
 import simg from "../images/sImg.jpg";
 import roundimg from "../images/test1.jpeg";
 import FirstFooter from "../GetStarted/FirstFooter";
+import Testimonials from "../GetStarted/Testimonials";
 
 const Homupdate = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -197,7 +198,8 @@ const Homupdate = () => {
         </div>
       </div>
 
-      <FirstFooter />
+      {/* <FirstFooter /> */}
+      <Testimonials />
 
       <footer className="bg-blue-900 text-white px-6 md:px-12 py-20">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-6 gap-8">
