@@ -1,20 +1,33 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import logo from "../images/logo.svg";
 import headImg from "../images/homeImg.jpg";
+import secImg from "../images/homeImg2.jpg";
 import simg from "../images/sImg.jpg";
 import roundimg from "../images/test1.jpeg";
 import FirstFooter from "../GetStarted/FirstFooter";
 
 const Homupdate = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  const images = [headImg, secImg];
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
+    }, 3000); // Switch every 3 seconds
+
+    return () => clearInterval(interval); // Clean up
+  }, []);
 
   return (
     <main className="max-w-[1300px] mx-auto md:px-12">
       {/* Hero Section */}
       <div
-        className="relative bg-cover bg-center bg-no-repeat h-[40rem] overflow-hidden"
+        className="relative bg-cover bg-center bg-no-repeat h-[40rem] overflow-hidden transition-all duration-1000"
         style={{
-          backgroundImage: `url(${headImg})`,
+          backgroundImage: `url(${images[currentImageIndex]})`,
+          transition: "background-image 1s ease-in-out",
         }}
       >
         {/* Overlay */}
@@ -22,13 +35,11 @@ const Homupdate = () => {
 
         {/* Header */}
         <header className="relative z-10  px-4 flex justify-between items-center text-white py-6">
-          {/* Logo */}
           <div className="flex items-center gap-2">
             <img src={logo} alt="Brandwave logo" className="h-8 w-auto" />
             <span className="text-lg font-semibold">Brandwave</span>
           </div>
 
-          {/* Desktop Nav */}
           <nav className="hidden md:block">
             <ul className="flex items-center gap-8 text-sm font-medium">
               <li className="hover:text-gray-300 cursor-pointer">Features</li>
@@ -40,12 +51,10 @@ const Homupdate = () => {
             </ul>
           </nav>
 
-          {/* Desktop Button */}
           <button className="hidden md:block bg-white text-black px-4 py-2 rounded-md hover:bg-gray-200 text-sm font-medium transition">
             Launch my Brand
           </button>
 
-          {/* Mobile Hamburger */}
           <div className="md:hidden">
             <button
               onClick={() => setMenuOpen(!menuOpen)}
@@ -77,7 +86,6 @@ const Homupdate = () => {
           </div>
         </header>
 
-        {/* Mobile Menu */}
         {menuOpen && (
           <div className="md:hidden absolute top-20 left-0 w-full bg-black/80 text-white z-20 px-6 py-4 space-y-4 text-sm font-medium">
             <ul className="space-y-2">
@@ -94,7 +102,6 @@ const Homupdate = () => {
           </div>
         )}
 
-        {/* Hero Content */}
         <div className="relative z-10 px-4 flex flex-col items-center justify-center text-center text-white h-full max-w-2xl mx-auto gap-6">
           <h1 className="text-4xl md:text-5xl font-bold leading-tight">
             Make Waves with Your Brand
@@ -117,11 +124,12 @@ const Homupdate = () => {
         </div>
       </div>
 
+      {/* Remaining Content */}
+      {/* (Unchanged parts below this line) */}
       {/* Brand Section */}
       <div className="bg-[#99A6AF] grid grid-cols-1 md:grid-cols-2 gap-10 px-6 md:px-12 py-20 ">
-        {/* Left: Profile and Service */}
+        {/* Left */}
         <div className="flex flex-col gap-8">
-          {/* Profile Card */}
           <div className="rounded bg-[#C8C9CA] p-6 space-y-4 shadow-md">
             <div className="flex flex-row gap-4 items-center">
               <img
@@ -137,8 +145,7 @@ const Homupdate = () => {
             <p className="text-sm text-gray-800">
               Cretex Inc. is a contemporary fashion brand redefining African
               style through innovative tailoring, modern cuts, and timeless
-              elegance. From custom pieces to ready-to-wear, each outfit tells a
-              story of confidence and culture.
+              elegance.
             </p>
             <div className="flex gap-2">
               {[...Array(5)].map((_, idx) => (
@@ -151,7 +158,6 @@ const Homupdate = () => {
             </div>
           </div>
 
-          {/* Design Services and Image */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             <div className="flex flex-col gap-3 py-6 px-4 bg-[#C8C9CA] rounded shadow-sm">
               <h2 className="font-bold text-lg">Design Services</h2>
@@ -176,7 +182,7 @@ const Homupdate = () => {
           </div>
         </div>
 
-        {/* Right: CTA Section */}
+        {/* Right */}
         <div className="flex flex-col gap-6 justify-center items-start px-4 md:px-8">
           <h1 className="font-bold text-4xl text-white leading-tight">
             Build a Brand Page That Speaks for You
@@ -190,10 +196,11 @@ const Homupdate = () => {
           </button>
         </div>
       </div>
+
       <FirstFooter />
+
       <footer className="bg-blue-900 text-white px-6 md:px-12 py-20">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-6 gap-8">
-          {/* Brand Info */}
           <div className="col-span-1 flex flex-col gap-4">
             <div className="flex flex-col items-center gap-2">
               <img src={logo} alt="Brandwave logo" className="h-6 w-auto" />
@@ -204,7 +211,6 @@ const Homupdate = () => {
             </p>
           </div>
 
-          {/* Company */}
           <div>
             <h5 className="text-[#5468E7] font-bold text-lg mb-2">Company</h5>
             <ul className="space-y-3 text-sm text-gray-200">
@@ -214,7 +220,6 @@ const Homupdate = () => {
             </ul>
           </div>
 
-          {/* Features */}
           <div>
             <h5 className="text-[#5468E7] font-bold text-lg mb-2">Features</h5>
             <ul className="space-y-3 text-sm text-gray-200">
@@ -224,7 +229,6 @@ const Homupdate = () => {
             </ul>
           </div>
 
-          {/* Contact Us */}
           <div>
             <h5 className="text-[#5468E7] font-bold text-lg mb-2">
               Contact Us
@@ -237,7 +241,6 @@ const Homupdate = () => {
             </ul>
           </div>
 
-          {/* Newsletter */}
           <div className="md:col-span-2">
             <h5 className="text-[#5468E7] font-bold text-lg mb-2">
               Stay ahead with branding tips
