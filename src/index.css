@@ -1,1 +1,21 @@
 @import "tailwindcss";
+@keyframes scroll-card {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-scroll-card {
+  animation: scroll-card 20s linear infinite;
+}
+/* global.css or Tailwind CSS file */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

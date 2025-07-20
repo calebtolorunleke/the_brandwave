@@ -17,3 +17,30 @@
     transform: translateY(-50%);
   }
 }
+
+.new-scroll {
+  /* display: flex;
+  flex-direction: row; */
+  animation: scrollUp 20s linear infinite;
+  /* position: full;
+  top: 0;
+  left: 0;
+  width: 100%; */
+}
+
+@keyframes scrollUp {
+  0% {
+    transform: translateX(-0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+/* global.css or Tailwind CSS file */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

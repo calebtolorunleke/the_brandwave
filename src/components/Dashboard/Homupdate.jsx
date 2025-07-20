@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import logo from "../images/logo.svg";
 import headImg from "../images/homeImg.jpg";
 import secImg from "../images/homeImg2.jpg";
@@ -10,15 +10,44 @@ import Testimonials from "../GetStarted/Testimonials";
 const Homupdate = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const scrollRef = useRef(null);
 
   const images = [headImg, secImg];
 
+  // Change background image every 3 seconds
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
-    }, 3000); // Switch every 3 seconds
+    }, 3000);
 
-    return () => clearInterval(interval); // Clean up
+    return () => clearInterval(interval);
+  }, [images.length]);
+
+  // Auto-scroll horizontal container
+  useEffect(() => {
+    const scrollContainer = scrollRef.current;
+    if (!scrollContainer) return;
+
+    let scrollAmount = 0;
+    let requestId;
+
+    const step = () => {
+      if (!scrollContainer) return;
+
+      scrollAmount += 1; // scroll speed in px per frame
+      if (
+        scrollAmount >=
+        scrollContainer.scrollWidth - scrollContainer.clientWidth
+      ) {
+        scrollAmount = 0; // reset scroll to start
+      }
+      scrollContainer.scrollLeft = scrollAmount;
+      requestId = requestAnimationFrame(step);
+    };
+
+    requestId = requestAnimationFrame(step);
+
+    return () => cancelAnimationFrame(requestId);
   }, []);
 
   return (
@@ -35,7 +64,7 @@ const Homupdate = () => {
         <div className="absolute inset-0 bg-black/50 z-0"></div>
 
         {/* Header */}
-        <header className="relative z-10  px-4 flex justify-between items-center text-white py-6">
+        <header className="relative z-10 px-4 flex justify-between items-center text-white py-6">
           <div className="flex items-center gap-2">
             <img src={logo} alt="Brandwave logo" className="h-8 w-auto" />
             <span className="text-lg font-semibold">Brandwave</span>
@@ -125,76 +154,298 @@ const Homupdate = () => {
         </div>
       </div>
 
-      {/* Remaining Content */}
-      {/* (Unchanged parts below this line) */}
-      {/* Brand Section */}
-      <div className="bg-[#99A6AF] grid grid-cols-1 md:grid-cols-2 gap-10 px-6 md:px-12 py-20 ">
-        {/* Left */}
-        <div className="flex flex-col gap-8">
-          <div className="rounded bg-[#C8C9CA] p-6 space-y-4 shadow-md">
-            <div className="flex flex-row gap-4 items-center">
-              <img
-                src={roundimg}
-                className="w-12 h-12 rounded-full"
-                alt="Profile"
-              />
-              <div className="flex flex-col">
-                <span className="font-semibold">Createx Inc.</span>
-                <span className="text-sm text-gray-700">Fashion Designer</span>
+      {/* Scrollable Brand Profile Sections */}
+      <div
+        ref={scrollRef}
+        className="flex overflow-x-auto gap-10 snap-x snap-mandatory scroll-smooth max-w-screen h-full"
+        style={{ scrollBehavior: "smooth" }}
+      >
+        {/* Section 1 */}
+        <div className="min-w-[100vw] snap-start shrink-0">
+          <div className="bg-[#99A6AF] grid grid-cols-1 md:grid-cols-2 gap-10 px-6 md:px-12 py-20 w-screen h-full">
+            {/* Left */}
+            <div className="flex flex-col gap-8">
+              <div className="rounded bg-[#C8C9CA] p-6 space-y-4 shadow-md">
+                <div className="flex flex-row gap-4 items-center">
+                  <img
+                    src={roundimg}
+                    className="w-12 h-12 rounded-full"
+                    alt="Profile"
+                  />
+                  <div className="flex flex-col">
+                    <span className="font-semibold">Createx Inc.</span>
+                    <span className="text-sm text-gray-700">
+                      Fashion Designer
+                    </span>
+                  </div>
+                </div>
+                <p className="text-sm text-gray-800">
+                  Cretex Inc. is a contemporary fashion brand redefining African
+                  style through innovative tailoring, modern cuts, and timeless
+                  elegance.
+                </p>
+                <div className="flex gap-2">
+                  {[...Array(5)].map((_, idx) => (
+                    <div
+                      key={idx}
+                      className="w-4 h-4 bg-yellow-400 rounded-full"
+                    />
+                  ))}
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <div className="flex flex-col gap-3 py-6 px-4 bg-[#C8C9CA] rounded shadow-sm">
+                  <h2 className="font-bold text-lg">Design Services</h2>
+                  <p className="text-sm">
+                    Custom Tailoring (Men & Women) <br />
+                    Ready-to-Wear Sales <br />
+                    Bridal & Eventwear <br />
+                    Creative Styling & Consultation <br />
+                    Fashion Design for Film/Stage
+                  </p>
+                  <span className="underline text-sm text-blue-800 cursor-pointer">
+                    Book a Styling Session
+                  </span>
+                </div>
+                <div className="h-full">
+                  <img
+                    src={simg}
+                    className="w-full h-full object-cover rounded"
+                    alt="Design Sample"
+                  />
+                </div>
               </div>
             </div>
-            <p className="text-sm text-gray-800">
-              Cretex Inc. is a contemporary fashion brand redefining African
-              style through innovative tailoring, modern cuts, and timeless
-              elegance.
-            </p>
-            <div className="flex gap-2">
-              {[...Array(5)].map((_, idx) => (
-                <div
-                  key={idx}
-                  className="w-4 h-4 bg-yellow-400 rounded-full"
-                  title="Star"
-                ></div>
-              ))}
-            </div>
-          </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            <div className="flex flex-col gap-3 py-6 px-4 bg-[#C8C9CA] rounded shadow-sm">
-              <h2 className="font-bold text-lg">Design Services</h2>
-              <p className="text-sm">
-                Custom Tailoring (Men & Women) <br />
-                Ready-to-Wear Sales <br />
-                Bridal & Eventwear <br />
-                Creative Styling & Consultation <br />
-                Fashion Design for Film/Stage
+            {/* Right */}
+            <div className="flex flex-col gap-6 justify-center items-start px-4 md:px-8">
+              <h1 className="font-bold text-4xl text-white leading-tight">
+                Build a Brand Page That Speaks for You
+              </h1>
+              <p className="text-white text-base">
+                Brandwave makes it easy to build a standout presence. Upload
+                your assets, choose a layout, and go live – no code, no hassle.
               </p>
-              <span className="underline text-sm text-blue-800 cursor-pointer">
-                Book a Styling Session
-              </span>
-            </div>
-            <div className="h-full">
-              <img
-                src={simg}
-                className="w-full h-full object-cover rounded"
-                alt="Design Sample"
-              />
+              <button className="text-white bg-[#1E88E5] px-6 py-3 rounded hover:bg-blue-700 transition">
+                Get Started
+              </button>
             </div>
           </div>
         </div>
 
-        {/* Right */}
-        <div className="flex flex-col gap-6 justify-center items-start px-4 md:px-8">
-          <h1 className="font-bold text-4xl text-white leading-tight">
-            Build a Brand Page That Speaks for You
-          </h1>
-          <p className="text-white text-base">
-            Brandwave makes it easy to build a standout presence. Upload your
-            assets, choose a layout, and go live – no code, no hassle.
-          </p>
-          <button className="text-white bg-[#1E88E5] px-6 py-3 rounded hover:bg-blue-700 transition">
-            Get Started
-          </button>
+        {/* Section 2 */}
+        <div className="min-w-[100vw] snap-start shrink-0">
+          <div className="bg-[#99A6AF] grid grid-cols-1 md:grid-cols-2 gap-10 px-6 md:px-12 py-20 w-screen h-full">
+            {/* Left */}
+            <div className="flex flex-col gap-8">
+              <div className="rounded bg-[#C8C9CA] p-6 space-y-4 shadow-md">
+                <div className="flex flex-row gap-4 items-center">
+                  <img
+                    src={roundimg}
+                    className="w-12 h-12 rounded-full"
+                    alt="Profile"
+                  />
+                  <div className="flex flex-col">
+                    <span className="font-semibold">Elegance Couture</span>
+                    <span className="text-sm text-gray-700">
+                      Luxury Designer
+                    </span>
+                  </div>
+                </div>
+                <p className="text-sm text-gray-800">
+                  Elegance Couture fuses tradition with luxury to deliver
+                  high-end garments tailored to perfection.
+                </p>
+                <div className="flex gap-2">
+                  {[...Array(5)].map((_, idx) => (
+                    <div
+                      key={idx}
+                      className="w-4 h-4 bg-yellow-400 rounded-full"
+                    />
+                  ))}
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <div className="flex flex-col gap-3 py-6 px-4 bg-[#C8C9CA] rounded shadow-sm">
+                  <h2 className="font-bold text-lg">Services</h2>
+                  <p className="text-sm">
+                    Red Carpet Styling <br />
+                    Editorial Fashion <br />
+                    Custom Accessories <br />
+                    Premium Fabric Curation
+                  </p>
+                  <span className="underline text-sm text-blue-800 cursor-pointer">
+                    Book a Session
+                  </span>
+                </div>
+                <div className="h-full">
+                  <img
+                    src={headImg}
+                    className="w-full h-full object-cover rounded"
+                    alt="Lookbook"
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Right */}
+            <div className="flex flex-col gap-6 justify-center items-start px-4 md:px-8">
+              <h1 className="font-bold text-4xl text-white leading-tight">
+                Tell Your Fashion Story
+              </h1>
+              <p className="text-white text-base">
+                Your brand deserves a platform that reflects its essence. Share
+                your creativity and connect with your audience instantly.
+              </p>
+              <button className="text-white bg-[#1E88E5] px-6 py-3 rounded hover:bg-blue-700 transition">
+                Launch Now
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Section 3 */}
+        <div className="min-w-[100vw] snap-start shrink-0">
+          <div className="bg-[#99A6AF] grid grid-cols-1 md:grid-cols-2 gap-10 px-6 md:px-12 py-20 w-screen h-full">
+            {/* Left */}
+            <div className="flex flex-col gap-8">
+              <div className="rounded bg-[#C8C9CA] p-6 space-y-4 shadow-md">
+                <div className="flex flex-row gap-4 items-center">
+                  <img
+                    src={roundimg}
+                    className="w-12 h-12 rounded-full"
+                    alt="Profile"
+                  />
+                  <div className="flex flex-col">
+                    <span className="font-semibold">Urban Stitch</span>
+                    <span className="text-sm text-gray-700">
+                      Streetwear Brand
+                    </span>
+                  </div>
+                </div>
+                <p className="text-sm text-gray-800">
+                  Urban Stitch is a youth-centric brand merging street culture
+                  with bold designs to make a statement.
+                </p>
+                <div className="flex gap-2">
+                  {[...Array(5)].map((_, idx) => (
+                    <div
+                      key={idx}
+                      className="w-4 h-4 bg-yellow-400 rounded-full"
+                    />
+                  ))}
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <div className="flex flex-col gap-3 py-6 px-4 bg-[#C8C9CA] rounded shadow-sm">
+                  <h2 className="font-bold text-lg">Offerings</h2>
+                  <p className="text-sm">
+                    Urban Apparel <br />
+                    Lookbook Shoots <br />
+                    Social Media Strategy <br />
+                    Custom Street Collabs
+                  </p>
+                  <span className="underline text-sm text-blue-800 cursor-pointer">
+                    Let’s Collaborate
+                  </span>
+                </div>
+                <div className="h-full">
+                  <img
+                    src={secImg}
+                    className="w-full h-full object-cover rounded"
+                    alt="Street Fashion"
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Right */}
+            <div className="flex flex-col gap-6 justify-center items-start px-4 md:px-8">
+              <h1 className="font-bold text-4xl text-white leading-tight">
+                Represent Your Roots
+              </h1>
+              <p className="text-white text-base">
+                Whether classic or edgy, Brandwave helps you bring your story to
+                life through a custom profile that’s uniquely yours.
+              </p>
+              <button className="text-white bg-[#1E88E5] px-6 py-3 rounded hover:bg-blue-700 transition">
+                Join Us
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Section 4 */}
+        <div className="min-w-[100vw] snap-start shrink-0">
+          <div className="bg-[#99A6AF] grid grid-cols-1 md:grid-cols-2 gap-10 px-6 md:px-12 py-20 w-screen h-full">
+            {/* Left */}
+            <div className="flex flex-col gap-8">
+              <div className="rounded bg-[#C8C9CA] p-6 space-y-4 shadow-md">
+                <div className="flex flex-row gap-4 items-center">
+                  <img
+                    src={roundimg}
+                    className="w-12 h-12 rounded-full"
+                    alt="Profile"
+                  />
+                  <div className="flex flex-col">
+                    <span className="font-semibold">Vintage Vogue</span>
+                    <span className="text-sm text-gray-700">Retro Fashion</span>
+                  </div>
+                </div>
+                <p className="text-sm text-gray-800">
+                  Vintage Vogue revives classic styles with a modern twist,
+                  perfect for the bold and nostalgic.
+                </p>
+                <div className="flex gap-2">
+                  {[...Array(5)].map((_, idx) => (
+                    <div
+                      key={idx}
+                      className="w-4 h-4 bg-yellow-400 rounded-full"
+                    />
+                  ))}
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <div className="flex flex-col gap-3 py-6 px-4 bg-[#C8C9CA] rounded shadow-sm">
+                  <h2 className="font-bold text-lg">Specialties</h2>
+                  <p className="text-sm">
+                    Retro Styling <br />
+                    Vintage Sales <br />
+                    Costume Rentals <br />
+                    Throwback Campaigns
+                  </p>
+                  <span className="underline text-sm text-blue-800 cursor-pointer">
+                    Book a Session
+                  </span>
+                </div>
+                <div className="h-full">
+                  <img
+                    src={headImg}
+                    className="w-full h-full object-cover rounded"
+                    alt="Retro Style"
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Right */}
+            <div className="flex flex-col gap-6 justify-center items-start px-4 md:px-8">
+              <h1 className="font-bold text-4xl text-white leading-tight">
+                Style That Tells Time
+              </h1>
+              <p className="text-white text-base">
+                Showcase the legacy of your brand and its evolution with a page
+                that's as unique as your journey.
+              </p>
+              <button className="text-white bg-[#1E88E5] px-6 py-3 rounded hover:bg-blue-700 transition">
+                Start Building
+              </button>
+            </div>
+          </div>
         </div>
       </div>
 
