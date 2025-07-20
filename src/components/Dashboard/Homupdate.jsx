@@ -81,9 +81,12 @@ const Homupdate = () => {
             </ul>
           </nav>
 
-          <button className="hidden md:block bg-white text-black px-4 py-2 rounded-md hover:bg-gray-200 text-sm font-medium transition">
+          <a
+            href="/signup"
+            className="hidden md:block bg-white text-black px-4 py-2 rounded-md hover:bg-gray-200 text-sm font-medium transition"
+          >
             Launch my Brand
-          </button>
+          </a>
 
           <div className="md:hidden">
             <button
@@ -126,9 +129,12 @@ const Homupdate = () => {
               </li>
               <li className="hover:text-gray-300 cursor-pointer">FAQ</li>
             </ul>
-            <button className="w-full bg-white text-black px-4 py-2 rounded-md hover:bg-gray-200 transition">
+            <a
+              href="/signup"
+              className="w-full bg-white text-black px-4 py-2 rounded-md hover:bg-gray-200 transition"
+            >
               Launch my Brand
-            </button>
+            </a>
           </div>
         )}
 
@@ -141,12 +147,18 @@ const Homupdate = () => {
             global recognition.
           </p>
           <div className="flex flex-col sm:flex-row gap-4">
-            <button className="bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-700 transition font-medium">
+            <a
+              href="/signup"
+              className="bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-700 transition font-medium cursor-pointer"
+            >
               Get Started
-            </button>
-            <button className="bg-white text-blue-600 px-6 py-3 rounded-md hover:bg-gray-100 transition font-medium">
+            </a>
+            <a
+              href="/signup"
+              className="bg-white text-blue-600 px-6 py-3 rounded-md hover:bg-gray-100 transition font-medium"
+            >
               Try for Free
-            </button>
+            </a>
           </div>
           <p className="text-sm text-gray-200">
             No credit card required. Set-up in under 5 minutes.
@@ -227,9 +239,12 @@ const Homupdate = () => {
                 Brandwave makes it easy to build a standout presence. Upload
                 your assets, choose a layout, and go live – no code, no hassle.
               </p>
-              <button className="text-white bg-[#1E88E5] px-6 py-3 rounded hover:bg-blue-700 transition">
+              <a
+                href="/signup"
+                className="text-white bg-[#1E88E5] px-6 py-3 rounded hover:bg-blue-700 transition"
+              >
                 Get Started
-              </button>
+              </a>
             </div>
           </div>
         </div>
